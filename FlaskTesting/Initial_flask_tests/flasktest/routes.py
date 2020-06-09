@@ -1,9 +1,6 @@
-from flask import Flask, render_template, url_for
-import folium
-
-
-app = Flask(__name__)
-
+from flask import render_template, url_for, redirect
+from flasktest import app
+from flasktest.models import User
 
 
 posts = [
@@ -24,18 +21,9 @@ posts = [
 @app.route('/')
 @app.route('/home')
 def home():
-    start_coords = (46.9540700, 142.7360300)
-    folium_map = folium.Map(location=start_coords, zoom_start=14)
-    folium_map.save('templates/map.html')
     return render_template('home.html', posts=posts)
 
 
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
