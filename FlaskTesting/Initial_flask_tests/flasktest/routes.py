@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect
-from flasktest import app
+from flasktest import app, db
 from flasktest.models import User
 
 
