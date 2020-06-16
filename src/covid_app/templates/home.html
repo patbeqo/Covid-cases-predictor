@@ -1,9 +1,21 @@
 {% extends "layout.html" %}
 
 {% block intro %}
-    <h3> Welcome </h3>
+    <h3 style="text-align:center; margin-top: 2em; margin-bottom: 2em; color: white; font-family:courier,arial,helvetica;"> Welcome To <strong><span style="color: rgb(46, 46, 109);">Rona</span><span style="color: rgb(94, 94, 9);">Map</span></strong></h3>
+    <p style="text-align: center; color: white; font-family: Verdana, Geneva, Tahoma, sans-serif;">The map below provides current and forecasted <span style="color: red;">COVID-19</span> cases.</p>
+    <p style="text-align: center; color: white; font-family: Verdana, Geneva, Tahoma, sans-serif;">Click on a city to begin!</p>
 {% endblock intro %}
 
 {% block map %}
-    <p> This is where the map should go </p>
+
+    <!---- this is the file that holds the map -->    
+    {% include "map.html" %} 
+
 {% endblock %}
+
+{% block explanation %}
+
+<h5 style="text-align:center; margin-top: 2em; margin-bottom: 2em; color: white; font-family:courier,arial,helvetica;"> How does it work ? </h5>
+<p style="text-align: center; color: white; font-family: Verdana, Geneva, Tahoma, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non pellentesque ex. Sed in est at sem fringilla tempus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis dapibus egestas nisi, eu varius risus auctor eu. Nam mattis faucibus tellus et fermentum. Nulla suscipit elit lacus. Proin quis sapien fermentum, suscipit ex vestibulum, interdum mauris. Vivamus eget commodo lacus. In malesuada vel ante eget facilisis. Sed arcu leo, molestie in augue eget, facilisis pretium lectus. Cras lacinia porttitor nunc, sed dapibus justo fringilla eu. Vivamus non metus venenatis, consectetur justo eu, ultrices augue. Donec ornare blandit sem vel dignissim. Nulla magna lacus, pharetra in fringilla nec, convallis vitae magna. Praesent tellus dui, tincidunt non tristique ut, pulvinar ac justo. Phasellus rutrum sem vitae libero fringilla, id aliquet quam tincidunt.</p>
+
+{% endblock explanation %}
