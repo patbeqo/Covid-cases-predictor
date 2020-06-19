@@ -1,0 +1,27 @@
+SQLAlchemy with sqlite & RESTful API notes
+
+DataBase --->
+
+//Adding to database
+	db.session.add(model_name)	db is the data base object created
+	db.session.commit()
+
+//In order to grab object data from database
+	model_name.query.filter_by(desired_requirement).first()
+					             .all() if you want every entry
+
+//In order to udpate an entry
+	obj.name = new_name	obj = model_name.query.filter_by() needs to be performed first before making changes
+	db.session.commit() 		make sure to commit after every change
+
+//More advanced queries
+	.delete() in order to delete an object in the database
+	can only delete one at a time, need to loop in order to delete multiple
+
+<---------
+
+REST ----->
+
+GET request: Should only retireve information back, no changes should be made.
+POST request: Used to create a new resource or item in db
+DELETE request: Delete a resource
