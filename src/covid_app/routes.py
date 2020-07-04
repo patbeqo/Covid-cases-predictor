@@ -1,5 +1,6 @@
 from flask import render_template, url_for, redirect
 from covid_app import app, db
+from covid_app.models import City
 import folium
 
 
@@ -36,3 +37,8 @@ def home():
 
 
     return render_template('home.html')
+
+
+# Web Scrape for City data and add to database
+def update_db():
+    print("hello")
