@@ -19,27 +19,24 @@ def home():
     # Creates map object starting in New York City with Styling applied
     m = folium.Map(width='75%', height='50%', left='12.5%', location=[40.7128, -74.0060], zoom_start=5)
 
-    # Calls webscrape function to grab all state names and coordinates
-    statesNameCoordinates = getCityNamesCoordinates()
+    # Database query for all City objects in database
+    stateData = City.query.all()
 
-    # Add marker for every capital city (Set to 10 just to test)
-    for element in statesNameCoordinates:
+    # Add marker for every US state
+    for element in stateData:
 
-        # Function call to grab data from database should be made here
-
-
-        cityName = element[2]
-        currentCases = 'test'
-        projectedCases = 'test'
-        longitude = element[1]
-        latitude = element[3]
+        cityName = element.cityName
+        currentCases = element.currNum
+        projectedCases = element.foreNum
+        longitude = element.longitude
+        lattitude = element.lattitude
 
         # Popup message that will be displayed when user selects city
         msg='<p>Current: {currentCases}</p><p>Projected: {projectedCases}'.format(currentCases=currentCases, projectedCases=projectedCases)
         popup = folium.Popup(msg, max_width=2650)
 
         # Creates a marker ( + i for testing)
-        folium.Marker([longitude, latitude], popup=popup, tooltip=cityName).add_to(m)
+        folium.Marker([longitude, lattitude], popup=popup, tooltip=cityName).add_to(m)
 
     # Creates the HTML file in order to display
     m.save('covid_app/templates/map.html')
@@ -48,8 +45,16 @@ def home():
     return render_template('home.html')
 
 
-# Web Scrape for City data and add to database
+# Web Scrape for US state names, longitude and lattitude
+# Used to jumpstart project
+# Only call if need to reset databse
 def getCityNamesCoordinates():
+
+    # Deletes entire databse
+    db.drop_all()
+
+    # Creates new database
+    db.create_all()
 
     # Initialize new array store every states name, longitude and latitude
     states_array = []
@@ -86,4 +91,9 @@ def getCityNamesCoordinates():
             tmp_arr.insert(len(tmp_arr), wantedText)
             counter += 1
     
-    return states_array
+    # Takes data and stores in database
+    for element in states_array:
+        newCity = City(cityName=str(element[2]), longitude=str(element[1]), lattitude=str(element[3]), currNum='0', foreNum='0')
+        db.session.add(newCity)
+    
+    db.session.commit()
