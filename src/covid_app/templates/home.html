@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 
 {% block intro %}
-    <h1 style="text-align:center; margin-top: 0em; padding-top: 2em; padding-bottom: 2em; color: white; font-family:courier,arial,helvetica;"> Welcome To <strong><span style="color: rgb(46, 46, 109);">Rona</span><span style="color: rgb(94, 94, 9);">Map</span></strong></h1>
-    <p style="text-align: center; color: white; padding-bottom: 1em; font-family: Verdana, Geneva, Tahoma, sans-serif;">The map below provides current and forecasted <span style="color: red;">COVID-19</span> cases.</p>
-    <p style="text-align: center; color: white; font-family: Verdana, Geneva, Tahoma, sans-serif;"><strong>Click on a city to begin!</strong></p>
+    <div class='intro'>
+        <h1>Welcome To RonaMap</h1>
+        <p>The map below provides current and forecasted cases.</p>
+        <p>Click on a city to begin!</p>
+    </div>
+    
 {% endblock intro %}
 
 {% block map %}
