@@ -100,7 +100,6 @@ def getFutureCases(a, cityData):
         {'X': X,
         'y': y}
     )
-    print(y)
     xmean = np.mean(X)
     ymean = np.mean(y)
 
