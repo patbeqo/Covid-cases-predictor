@@ -77,11 +77,10 @@ def updateCases():
                     cityData.append(data[(i+1)+j*56])
                 cityArray.append(cityData)
 
-    print(cityArray)
     for i in range(52):
         myCity = City.query.filter_by(cityName=citydict[cityArray[i][0][1]]).first()
         myCity.currNum = cityArray[i][0][2]
-        myCity.foreNum = getFutureCases(cityArray[i])
+        #myCity.foreNum = getFutureCases(cityArray[i])
 
     db.session.commit()
 
@@ -91,15 +90,16 @@ def getFutureCases(cityData):
 
 @app.route('/')
 @app.route('/home')
-
-
 def home():
     
     ############ The code below creates and customizes the map ################
 
     # Creates map object starting in New York City with Styling applied
     m = folium.Map(width='75%', height='50%', left='12.5%', location=[40.7128, -74.0060], zoom_start=5)
+
+    #Updates cases data
     updateCases()
+
     # Database query for all City objects in database
     stateData = City.query.all()
 
@@ -121,7 +121,6 @@ def home():
 
     # Creates the HTML file in order to display
     m.save('covid_app/templates/map.html')
-
 
     return render_template('home.html')
 
