@@ -8,5 +8,6 @@ class City(db.Model):
     currNum = db.Column(db.String)
     foreNum = db.Column(db.String)
 
+
     def __repr__(self):
         return f"City('{self.cityName}', '{self.longitude}', '{self.lattitude}', '{self.currNum}', '{self.foreNum}')"
