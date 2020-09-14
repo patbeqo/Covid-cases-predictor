@@ -4,6 +4,9 @@ from covid_app.models import City
 
 import folium
 import csv
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -74,19 +77,42 @@ def updateCases():
             cityData = []
             if data[(i+1)][1] != "AS" and data[(i+1)][1] != "GU" and data[(i+1)][1] != "MP" and data[(i+1)][1] != "VI":
                 for j in range(10):
-                    cityData.append(data[(i+1)+j*56])
+                    cityData.insert(0, data[(i+1)+j*56])
                 cityArray.append(cityData)
 
     for i in range(52):
         myCity = City.query.filter_by(cityName=citydict[cityArray[i][0][1]]).first()
-        myCity.currNum = cityArray[i][0][2]
-        #myCity.foreNum = getFutureCases(cityArray[i])
+        myCity.currNum = cityArray[i][9][2]
+        myCity.foreNum = getFutureCases(i, cityArray)
 
     db.session.commit()
 
-def getFutureCases(cityData):
+def getFutureCases(a, cityData):
     #run regression model on data and predict future value
-    print()
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import PolynomialFeatures
+    X = [0,1,2,3,4,5,6,7,8,9]
+    y = []
+    for k in range(10):
+        y.append(int(cityData[a][k][2]))
+
+    df = pd.DataFrame(
+        {'X': X,
+        'y': y}
+    )
+    print(y)
+    xmean = np.mean(X)
+    ymean = np.mean(y)
+
+    # Calculate the terms needed for the numator and denominator of beta
+    df['xycov'] = (df['X'] - xmean) * (df['y'] - ymean)
+    df['xvar'] = (df['X'] - xmean)**2
+
+    # Calculate beta and alpha
+    beta = df['xycov'].sum() / df['xvar'].sum()
+    alpha = ymean - (beta * xmean)
+
+    return int (alpha + beta * 10)
 
 @app.route('/')
 @app.route('/home')
